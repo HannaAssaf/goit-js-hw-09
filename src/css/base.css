@@ -30,3 +30,87 @@ main {
 main:has(.back-link) {
   text-align: center;
 }
+
+.feedback-form {
+  max-width: 408px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px auto;
+}
+
+.feedback-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: start;
+  font-weight: 400;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+}
+
+.feedback-form input {
+  min-width: 360px;
+  height: 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  padding: 8px 16px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: border 0.3s ease-in-out;
+}
+
+.feedback-form input:hover {
+  border: 1px solid #000000;
+}
+
+.feedback-form textarea {
+  width: 360px;
+  height: 80px;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  padding: 8px 16px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+.feedback-form textarea:hover {
+  border: 1px solid #000000;
+}
+
+.feedback-form button {
+  align-self: flex-start;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 95px;
+  background-color: #4e75ff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.04em;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+  margin-left: 24px;
+}
+
+.feedback-form button:hover {
+  background-color: #6c8cff;
+}

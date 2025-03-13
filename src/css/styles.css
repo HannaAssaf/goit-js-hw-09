@@ -27,6 +27,7 @@ body {
   row-gap: 24px;
   column-gap: 24px;
   justify-content: center;
+  padding-bottom: 24px;
 }
 
 .gallery-item {
@@ -44,6 +45,6 @@ body {
 }
 
 .gallery-image:hover {
-  cursor: url('../Vector.png'), pointer;
+  /* cursor: url('../Vector.png'), pointer; */
   transform: scale(1.05);
 }
