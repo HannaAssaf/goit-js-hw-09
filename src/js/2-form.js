@@ -3,53 +3,75 @@ const formData = {
   message: '',
 };
 
-const form = document.querySelector('.feedback-form');
+const LSTORAGE_KEY = 'feedback-form-state';
 
-const savedData = localStorage.getItem('feedback-form-state');
+const form = document.querySelector('.feedback-form');
+const input = form.querySelector('input');
+const textarea = form.querySelector('textarea');
+
+const savedData = localStorage.getItem(LSTORAGE_KEY);
 if (savedData) {
-  try {
-    const parsedData = JSON.parse(savedData);
-    // Заповнюємо об’єкт formData (переконуємось, що undefined не підставляється)
-    formData.email = parsedData.email || '';
-    formData.message = parsedData.message || '';
-    // Заповнюємо поля форми
-    form.elements.email.value = formData.email;
-    form.elements.message.value = formData.message;
-  } catch (error) {
-    console.error('Error parsing feedback form data:', error);
-  }
+  formData = JSON.parse(savedData);
+  form.elements.email.value = formData.email;
+  form.elements.message.value = formData.message;
 }
 
-// Використовуємо делегування подій для прослуховування змін у формі
-form.addEventListener('input', event => {
-  const { name, value } = event.target;
-  if (name in formData) {
-    // Зберігаємо значення без пробілів на краях
-    formData[name] = value.trim();
-    localStorage.setItem('feedback-form-state', JSON.stringify(formData));
-  }
-});
+form.addEventListener('input', onFormInput);
 
-// Обробка сабміту форми
-form.addEventListener('submit', event => {
+function onFormInput(event) {
+  formData[event.target.name] = event.target.value;
+
+  localStorage.setItem(LSTORAGE_KEY, formData);
+}
+
+form.addEventListener('submit', onFormSubmit);
+
+function onFormSubmit(event) {
   event.preventDefault();
 
-  // Перевіряємо, чи всі поля заповнені
   if (formData.email === '' || formData.message === '') {
     alert('Fill please all fields');
     return;
   }
 
-  // Виводимо об’єкт formData у консоль
   console.log(formData);
 
-  // Очищуємо локальне сховище
-  localStorage.removeItem('feedback-form-state');
-
-  // Очищуємо об’єкт formData
+  localStorage.removeItem(LSTORAGE_KEY);
   formData.email = '';
   formData.message = '';
 
-  // Очищуємо поля форми
   form.reset();
-});
+}
+
+// populateTextarea();
+
+// Обробка сабміту форми
+// form.addEventListener('submit', onFormSubmit);
+// textarea.addEventListener('input', onFormMessage);
+
+// function onFormSubmit(event) {
+//   event.preventDefault();
+
+//   const form = event.currentTarget;
+
+//   const { email, message } = form.elements;
+
+//   const formData = {
+//     userEmail: email.value,
+//     userMessage: message.value,
+//   };
+
+//   console.log(formData);
+
+//   localStorage.removeItem(LSTORAGE_KEY);
+//   form.reset();
+// }
+
+// function onFormMessage(event) {
+//   const msg = event.target.value;
+//   localStorage.setItem(LSTORAGE_KEY, msg);
+// }
+
+// function populateTextarea() {
+//   textarea.value = localStorage.getItem(LSTORAGE_KEY) ?? '';
+// }
