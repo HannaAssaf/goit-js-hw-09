@@ -4,24 +4,29 @@ const formData = {
 };
 
 const LSTORAGE_KEY = 'feedback-form-state';
-
 const form = document.querySelector('.feedback-form');
-const input = form.querySelector('input');
-const textarea = form.querySelector('textarea');
 
 const savedData = localStorage.getItem(LSTORAGE_KEY);
 if (savedData) {
-  formData = JSON.parse(savedData);
-  form.elements.email.value = formData.email;
-  form.elements.message.value = formData.message;
+  try {
+    const parsedData = JSON.parse(savedData);
+    formData.email = parsedData.email || '';
+    formData.message = parsedData.message || '';
+    form.elements.email.value = formData.email;
+    form.elements.message.value = formData.message;
+  } catch (error) {
+    console.error('Error parsing stored data:', error);
+  }
 }
 
 form.addEventListener('input', onFormInput);
 
 function onFormInput(event) {
-  formData[event.target.name] = event.target.value;
-
-  localStorage.setItem(LSTORAGE_KEY, formData);
+  const { name, value } = event.target;
+  if (formData.hasOwnProperty(name)) {
+    formData[name] = value.trim();
+    localStorage.setItem(LSTORAGE_KEY, JSON.stringify(formData));
+  }
 }
 
 form.addEventListener('submit', onFormSubmit);
@@ -37,41 +42,9 @@ function onFormSubmit(event) {
   console.log(formData);
 
   localStorage.removeItem(LSTORAGE_KEY);
+
   formData.email = '';
   formData.message = '';
 
   form.reset();
 }
-
-// populateTextarea();
-
-// Обробка сабміту форми
-// form.addEventListener('submit', onFormSubmit);
-// textarea.addEventListener('input', onFormMessage);
-
-// function onFormSubmit(event) {
-//   event.preventDefault();
-
-//   const form = event.currentTarget;
-
-//   const { email, message } = form.elements;
-
-//   const formData = {
-//     userEmail: email.value,
-//     userMessage: message.value,
-//   };
-
-//   console.log(formData);
-
-//   localStorage.removeItem(LSTORAGE_KEY);
-//   form.reset();
-// }
-
-// function onFormMessage(event) {
-//   const msg = event.target.value;
-//   localStorage.setItem(LSTORAGE_KEY, msg);
-// }
-
-// function populateTextarea() {
-//   textarea.value = localStorage.getItem(LSTORAGE_KEY) ?? '';
-// }
